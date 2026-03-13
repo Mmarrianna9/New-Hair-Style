@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { Users, Scissors, Calendar, Home } from 'lucide-react';
-import api from './api';
-import './App.css'; // Assicurati di importare il file CSS per gli stili
+import { Home, Users, Calendar } from 'lucide-react';
+import './App.css';
 
-// Importa le immagini di sfondo
-import sfondo from './assets/images/sfondo.jpg'; // Sostituisci con l'estensione corretta se diversa (.png, etc.)
-import sfondo2 from './assets/images/sfondo2.jpg'; // Sostituisci con l'estensione corretta se diversa
 
-// Componente per il Carosello
+import BarbersList from './components/BarbersList';
+import BookingForm from './components/BookingForm';
+
+
+import sfondo from './assets/images/sfondo.jpg';
+import sfondo2 from './assets/images/sfondo2.jpg';
+
+// --- COMPONENTE CAROSELLO ---
 const Carousel = () => {
   const images = [sfondo, sfondo2];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -16,9 +19,8 @@ const Carousel = () => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 5000); // Cambia immagine ogni 5 secondi
-
-    return () => clearInterval(intervalId); // Pulisci l'intervallo allo smontaggio del componente
+    }, 5000);
+    return () => clearInterval(intervalId);
   }, [images.length]);
 
   return (
@@ -27,93 +29,73 @@ const Carousel = () => {
         <img
           key={index}
           src={image}
-          alt={`Sfondo ${index + 1}`}
+          alt={`Slide ${index + 1}`}
           className={`carousel-image ${index === currentImageIndex ? 'active' : ''}`}
         />
       ))}
-      {/* Aggiungi controlli (frecce, punti) se desideri */}
     </div>
   );
 };
 
-const BarbersList = () => {
-  const [barbers, setBarbers] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-
-    api.get('/barbers')
-      .then(response => {
-        setBarbers(response.data);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error("Errore nel caricamento dei barbieri:", error);
-        setLoading(false);
-      });
-  }, []);
-
-  if (loading) return <div className="text-center p-10">Caricamento in corso...</div>;
-
-  return (
-    <div className="p-6">
-      <h2 className="text-3xl font-bold mb-6 flex items-center justify-center gap-2">
-        <Scissors className="text-black" /> I Nostri Professionisti
-      </h2>
-      
-      {barbers.length === 0 ? (
-        <p className="text-center text-gray-500">Nessun barbiere trovato nel database.</p>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {barbers.map(barber => (
-            <div key={barber.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:scale-105 transition-transform duration-300 border border-gray-200">
-              <div className="bg-black h-32 flex items-center justify-center">
-                <Users size={48} className="text-white opacity-20" />
-              </div>
-              <div className="p-6 text-center">
-                <h3 className="text-xl font-bold text-gray-800 uppercase tracking-wider">{barber.name}</h3>
-                <p className="text-gray-500 mb-4">Master Barber</p>
-                <button className="bg-black text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-gray-800 transition-colors">
-                  VEDI PROFILO
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-};
-
-// App Principale con Navigazione
-function App() {
+// --- COMPONENTE PRINCIPALE ---
+export default function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-gray-100">
+      <div className="min-h-screen bg-white text-black">
+        
         {/* Navbar */}
-        <nav className="bg-black text-white p-4 flex gap-6 shadow-md">
-          <Link to="/" className="flex items-center gap-2"><Home size={20}/> Home</Link>
-          <Link to="/barbers" className="flex items-center gap-2"><Users size={20}/> Barbieri</Link>
-          <Link to="/booking" className="flex items-center gap-2"><Calendar size={20}/> Prenota</Link>
+        <nav className="bg-white/80 backdrop-blur-md p-5 sticky top-0 z-50 border-b border-gray-100">
+          <div className="container mx-auto flex justify-between items-center">
+            <Link to="/" className="text-2xl font-black uppercase italic tracking-tighter">
+              New Hair Style
+            </Link>
+            <div className="flex gap-8 items-center font-bold text-sm uppercase">
+              <Link to="/" className="hover:opacity-50 transition-opacity flex items-center gap-1">
+                <Home size={16}/> Home
+              </Link>
+              <Link to="/barbers" className="hover:opacity-50 transition-opacity flex items-center gap-1">
+                <Users size={16}/> Barbieri
+              </Link>
+              <Link to="/booking" className="bg-black text-white px-6 py-2 rounded-full hover:bg-zinc-800 transition-all flex items-center gap-1">
+                <Calendar size={16}/> Prenota
+              </Link>
+            </div>
+          </div>
         </nav>
 
-        {/* Rotte */}
-        <main className="container mx-auto mt-6">
+        {/* Gestione delle Rotte */}
+        <main>
           <Routes>
+            {/* 1. Home Page */}
             <Route path="/" element={
-              <div>
+              <div className="relative">
                 <Carousel />
-                <h1 className="text-3xl p-4 text-center mt-8">Benvenuto al New Hair Style!</h1>
-                <p className="text-xl p-4 text-center">Il tuo stile, la nostra passione. Prenota il tuo appuntamento oggi stesso!</p>
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center bg-black/50 px-4">
+                  <h1 className="text-6xl md:text-9xl font-black uppercase mb-4 tracking-tighter">
+                    New Hair Style
+                  </h1>
+                  <p className="text-xl md:text-3xl font-light mb-10 max-w-2xl">
+                    L'eccellenza del taglio a Treviso.
+                  </p>
+                  <Link to="/booking" className="bg-white text-black px-12 py-5 font-black rounded-full hover:scale-110 transition-transform shadow-2xl uppercase">
+                    Fissa un appuntamento
+                  </Link>
+                </div>
               </div>
             } />
+
+            {/* 2. Pagina Barbieri - */}
             <Route path="/barbers" element={<BarbersList />} />
-            <Route path="/booking" element={<h1 className="text-3xl p-4">Pagina Prenotazioni (Work in Progress)</h1>} />
+
+            {/* 3. Pagina Prenotazione ---- */}
+            <Route path="/booking" element={<BookingForm />} />
           </Routes>
         </main>
+
+        <footer className="bg-black text-white py-10 text-center mt-auto">
+          <p className="text-gray-500 text-sm">© 2026 New Hair Style. Tutti i diritti riservati.</p>
+        </footer>
       </div>
     </Router>
   );
 }
-
-export default App;
