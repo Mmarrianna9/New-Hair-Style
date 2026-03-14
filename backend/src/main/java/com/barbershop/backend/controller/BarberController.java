@@ -1,31 +1,31 @@
 package com.barbershop.backend.controller;
 
-import java.util.Arrays;
-import java.util.List;
+import com.barbershop.backend.model.Barber;
+import com.barbershop.backend.repository.BarberRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/barbers")
-// Permette al tuo frontend React (su porta 5173) di comunicare con il backend
-@CrossOrigin(origins = "http://localhost:5173") 
+@CrossOrigin(origins = "http://localhost:5173")
+@RequiredArgsConstructor
 public class BarberController {
 
-    // Esempio di dati fittizi (Mock Data)
-    // In futuro, qui inietterai il BarberService per leggere dal database
+    private final BarberRepository repository;
+
+
     @GetMapping
-    public List<String> getAllBarbers() {
-        return Arrays.asList("Marco il Barbiere", "Alessandro", "Luca", "Giovanni");
+    public List<Barber> getAllBarbers() {
+        return repository.findAll();
     }
 
-    // Esempio per ottenere un singolo barbiere tramite ID
     @GetMapping("/{id}")
-    public String getBarberById(@PathVariable Long id) {
-        return "Barbiere con ID: " + id;
+    public ResponseEntity<Barber> getBarberById(@PathVariable Long id) {
+        return repository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
-
 }
