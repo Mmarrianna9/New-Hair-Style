@@ -1,1 +1,13 @@
 @import "tailwindcss";
+@theme {
+  /* Definiamo il colore Oro Accento */
+  --color-accent-gold: #D4AF37;
+  
+  /* Aggiungiamo le ombre personalizzate per il testo */
+  --text-shadow-xl: 0 10px 20px rgba(0, 0, 0, 0.8);
+}
+
+/* Opzionale: Utilità per il text-shadow se non viene rilevato automaticamente */
+@utility text-shadow-xl {
+  text-shadow: var(--text-shadow-xl);
+}

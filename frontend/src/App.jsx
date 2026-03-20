@@ -1,99 +1,118 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { Home, Users, Calendar } from 'lucide-react';
 import './App.css';
 
-
+// Componenti
 import BarbersList from './components/BarbersList';
 import BookingForm from './components/BookingForm';
+import AdminDashboard from './components/AdminDashboard';
 
-
+// Asset
 import sfondo from './assets/images/sfondo.jpg';
 import sfondo2 from './assets/images/sfondo2.jpg';
 
-// --- COMPONENTE CAROSELLO ---
-const Carousel = () => {
+const GlobalBackground = () => {
   const images = [sfondo, sfondo2];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+      setCurrentImageIndex((prev) => (prev + 1) % images.length);
     }, 5000);
     return () => clearInterval(intervalId);
   }, [images.length]);
 
   return (
-    <div className="carousel-container">
-      {images.map((image, index) => (
-        <img
-          key={index}
-          src={image}
-          alt={`Slide ${index + 1}`}
-          className={`carousel-image ${index === currentImageIndex ? 'active' : ''}`}
+    <div className="fixed inset-0 z-0 w-full h-full">
+      {images.map((img, i) => (
+        <img 
+          key={i} 
+          src={img} 
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${i === currentImageIndex ? 'opacity-100' : 'opacity-0'}`} 
+          alt="background" 
         />
       ))}
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-[2px]"></div>
     </div>
   );
 };
 
-// --- COMPONENTE PRINCIPALE ---
 export default function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-white text-black">
+      <div className="relative min-h-screen flex flex-col font-sans text-white overflow-x-hidden">
+        <GlobalBackground />
         
-        {/* Navbar */}
-        <nav className="bg-white/80 backdrop-blur-md p-5 sticky top-0 z-50 border-b border-gray-100">
-          <div className="container mx-auto flex justify-between items-center">
-            <Link to="/" className="text-2xl font-black uppercase italic tracking-tighter">
-              New Hair Style
+        {/* NAVBAR RIPRISTINATA E COMPLETA */}
+        <nav className="fixed top-0 left-0 right-0 h-14 z-50 bg-black/60 backdrop-blur-md border-b border-white/5 flex items-center px-6 justify-between">
+          <Link to="/" className="text-lg font-black uppercase tracking-tighter text-accent-gold hover:scale-105 transition-transform">
+            NEW HAIR STYLE
+          </Link>
+          
+          <div className="flex gap-6 items-center">
+            {/* Tasto Home riaggiunto */}
+            <Link to="/" className="text-[10px] uppercase font-bold tracking-widest text-zinc-400 hover:text-white transition-colors">
+              Home
             </Link>
-            <div className="flex gap-8 items-center font-bold text-sm uppercase">
-              <Link to="/" className="hover:opacity-50 transition-opacity flex items-center gap-1">
-                <Home size={16}/> Home
-              </Link>
-              <Link to="/barbers" className="hover:opacity-50 transition-opacity flex items-center gap-1">
-                <Users size={16}/> Barbieri
-              </Link>
-              <Link to="/booking" className="bg-black text-white px-6 py-2 rounded-full hover:bg-zinc-800 transition-all flex items-center gap-1">
-                <Calendar size={16}/> Prenota
-              </Link>
-            </div>
+            
+            <Link to="/booking" className="bg-accent-gold text-black px-4 py-1.5 rounded-full font-black text-[10px] uppercase tracking-widest hover:scale-105 transition-all shadow-lg">
+              Prenota
+            </Link>
+            
+            <Link to="/admin" className="text-zinc-400 hover:text-white text-[10px] uppercase font-bold tracking-widest transition-colors">
+              Admin
+            </Link>
           </div>
         </nav>
 
-        {/* Gestione delle Rotte */}
-        <main>
+        {/* Main Content */}
+        <main className="relative z-10 flex-grow pt-14 flex items-center justify-center">
           <Routes>
-            {/* 1. Home Page */}
+            {/* Home Page */}
             <Route path="/" element={
-              <div className="relative">
-                <Carousel />
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center bg-black/50 px-4">
-                  <h1 className="text-6xl md:text-9xl font-black uppercase mb-4 tracking-tighter">
-                    New Hair Style
-                  </h1>
-                  <p className="text-xl md:text-3xl font-light mb-10 max-w-2xl">
-                    L'eccellenza del taglio a Treviso.
-                  </p>
-                  <Link to="/booking" className="bg-white text-black px-12 py-5 font-black rounded-full hover:scale-110 transition-transform shadow-2xl uppercase">
-                    Fissa un appuntamento
-                  </Link>
+              <div className="text-center animate-in fade-in zoom-in duration-1000">
+                <h1 className="text-6xl md:text-8xl font-black uppercase italic drop-shadow-2xl">
+                  New <span className="text-accent-gold">Hair</span> Style
+                </h1>
+                <p className="mt-4 text-zinc-400 uppercase tracking-[0.5em] text-[10px] font-bold">Luxury Barbering Experience</p>
+              </div>
+            } />
+            
+            {/* Booking Page con Ali Laterali (3 a sinistra, 2 a destra) */}
+            <Route path="/booking" element={
+              <div className="w-full max-w-[1300px] mx-auto px-4 py-10 animate-in fade-in duration-700">
+                <div className="flex flex-row items-center justify-center gap-8 md:gap-16">
+                  
+                  {/* Ala Sinistra (3 Barbieri) */}
+                  <div className="hidden lg:block">
+                    <BarbersList position="left" />
+                  </div>
+
+                  {/* Centro: Dashboard */}
+                  <div className="w-full max-w-xl bg-white text-black rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.6)] overflow-hidden border-t-[8px] border-accent-gold p-8 md:p-10 z-20">
+                    <div className="text-center mb-8">
+                      <h2 className="text-2xl font-black uppercase tracking-tight text-black">Il Tuo Appuntamento</h2>
+                      <div className="w-10 h-1 bg-accent-gold mx-auto mt-2 rounded-full"></div>
+                    </div>
+                    <BookingForm />
+                  </div>
+
+                  {/* Ala Destra (2 Barbieri) */}
+                  <div className="hidden lg:block">
+                    <BarbersList position="right" />
+                  </div>
+
                 </div>
               </div>
             } />
 
-            {/* 2. Pagina Barbieri - */}
-            <Route path="/barbers" element={<BarbersList />} />
-
-            {/* 3. Pagina Prenotazione ---- */}
-            <Route path="/booking" element={<BookingForm />} />
+            {/* Area Admin */}
+            <Route path="/admin" element={<AdminDashboard />} />
           </Routes>
         </main>
 
-        <footer className="bg-black text-white py-10 text-center mt-auto">
-          <p className="text-gray-500 text-sm">© 2026 New Hair Style. Tutti i diritti riservati.</p>
+        <footer className="relative z-10 py-4 text-[9px] text-center text-zinc-500 uppercase tracking-[0.5em]">
+          Treviso — © 2026 New Hair Style
         </footer>
       </div>
     </Router>
