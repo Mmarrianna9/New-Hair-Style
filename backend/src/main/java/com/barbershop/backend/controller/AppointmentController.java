@@ -17,8 +17,12 @@ import com.barbershop.backend.service.AppointmentService;
 public class AppointmentController {
 
 
-    @Autowired
-    private AppointmentService appointmentService;
+    private final AppointmentService appointmentService;
+
+
+    AppointmentController(AppointmentService appointmentService) {
+        this.appointmentService = appointmentService;
+    }
   
 
     @GetMapping

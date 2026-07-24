@@ -1,3 +1,13 @@
+frontend/src/
+├── assets/
+│   └── images/          # Immagini (sfondo, barbieri, ecc.)
+├── components/          # I componenti visivi (BarbersList, BookingForm, AdminDashboard)
+├── api.js               # 🔌 Il file unico per collegarsi al backend Spring Boot
+├── App.jsx              # 🖥️ La struttura principale con la Navbar e le rotte
+├── App.css              # Stili globali
+├── index.css            # Tailwind / Stili base
+└── main.jsx             # Punto di ingresso di React
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

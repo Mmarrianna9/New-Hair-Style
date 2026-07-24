@@ -1,7 +1,28 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-gold: #d4af37;
+  }
+}
+
+.text-accent-gold {
+  color: var(--color-gold);
+}
+
+.bg-accent-gold {
+  background-color: var(--color-gold);
+}
+
+.border-accent-gold {
+  border-color: var(--color-gold);
+}
+
+/* Classi Carosello Sfondo */
 .carousel-container {
   position: relative;
   width: 100%;
-  height: 80vh; /* Regola l'altezza desiderata */
+  height: 80vh;
   overflow: hidden;
 }
 
@@ -11,9 +32,9 @@
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Adatta l'immagine senza distorcerla */
+  object-fit: cover;
   opacity: 0;
-  transition: opacity 1s ease-in-out; /* Transizione sfumata */
+  transition: opacity 1s ease-in-out;
 }
 
 .carousel-image.active {

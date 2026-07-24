@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Hair Style - La Nostra Storia</title>
+    <style>
+        :root {
+            --primary-color: #1a1a1a;
+            --accent-color: #c5a059;
+            --bg-color: #f9f9f9;
+            --text-color: #444;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            border-bottom: 4px solid var(--accent-color);
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.8rem;
+            letter-spacing: 2px;
+        }
+        header p {
+            color: var(--accent-color);
+            font-size: 1.3rem;
+            margin-top: 10px;
+            font-weight: 300;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 40px;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent-color);
+            margin: 10px auto 0;
+        }
+        .story-box {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 50px;
+            text-align: center;
+        }
+        .story-box p {
+            font-size: 1.15rem;
+            color: #555;
+            max-width: 900px;
+            margin: 0 auto 20px;
+            line-height: 1.8;
+        }
+        .highlight {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            padding-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+        }
+        .card h3 {
+            margin: 20px 0 10px;
+            color: var(--primary-color);
+            font-size: 1.4rem;
+        }
+        .card p {
+            font-size: 1rem;
+            color: #666;
+            padding: 0 20px;
+            margin: 0;
+        }
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 25px;
+            font-size: 0.95rem;
+            border-top: 3px solid var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>New Hair Style</h1>
+        <p>Tradizione, Passione e Stile a Treviso</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- Sezione La Nostra Storia -->
+        <div class="story-box">
+            <h2 class="section-title" style="margin-top: 0;">La Nostra Storia</h2>
+            <p>Con <span class="highlight">oltre 20 anni di esperienza</span> nel settore dell'acconciatura, <strong>New Hair Style</strong> rappresenta un punto di riferimento consolidato a Treviso. Nato dalla passione per l'arte del taglio e la cura della persona, il nostro salone unisce l'artigianalità e l'esperienza maturata nel corso degli anni con le tendenze stilistiche più moderne.</p>
+            <p>Ogni giorno ci dedichiamo ai nostri clienti con la stessa passione del primo giorno, offrendo consulenze d'immagine personalizzate e trattamenti di alta qualità per valorizzare la bellezza e lo stile unico di ognuno.</p>
+        </div>
+
+        <!-- Sezione I Nostri Lavori / Galleria -->
+        <h2 class="section-title">I Nostri Stili e Lavori</h2>
+        <div class="gallery">
+            
+            <div class="card">
+                <img src="images/moderno1.jpg" alt="Stile Moderno">
+                <h3>Tagli Moderni e di Tendenza</h3>
+                <p>Look contemporanei e dinamici, studiati per valorizzare i tratti del viso con un tocco di stile attuale.</p>
+            </div>
+
+            <div class="card">
+                <img src="images/uomo.jpg" alt="Styling Uomo">
+                <h3>Grooming Uomo & Sfumature</h3>
+                <p>Tagli classici e moderni curati nei minimi dettagli, con rifiniture precise per barba e capelli.</p>
+            </div>
+
+            <div class="card">
+                <img src="images/sposa.jpg" alt="Acconciatura Sposa">
+                <h3>Elegante Sposa & Cerimonie</h3>
+                <p>Acconciature esclusive e raffinate per rendere unici i momenti più importanti e speciali della tua vita.</p>
+            </div>
+
+            <div class="card">
+                <img src="images/lunghi.jpg" alt="Capelli Lunghi">
+                <h3>Cura e Styling Capelli Lunghi</h3>
+                <p>Trattamenti dedicati, pieghe impeccabili e scalature sartoriali per dare volume e luminosità.</p>
+            </div>
+
+            <div class="card">
+                <img src="images/medi.jpg" alt="Tagli Medi">
+                <h3>Tagli Medi Versatili</h3>
+                <p>Soluzioni di stile pratiche ed eleganti, facili da gestire ogni giorno senza rinunciare alla classe.</p>
+            </div>
+
+            <div class="card">
+                <img src="images/corti2.jpg" alt="Tagli Corti">
+                <h3>Tagli Corti di Carattere</h3>
+                <p>Linee decise e geometriche o look sbarazzini per esprimere al meglio la propria personalità.</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 New Hair Style - Treviso. Tutti i diritti riservati.</p>
+    </footer>
+
+</body>
+</html>
