@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const chatApi = axios.create({
-  baseURL: 'http://localhost:8000/api',
+  baseURL: 'https://new-hair-style-chatbot.onrender.com/api',
   headers: {
     'Content-Type': 'application/json'
   }
