@@ -19,12 +19,14 @@ app.add_middleware(
 def get_db_connection():
     try:
         return mysql.connector.connect(
-            host='localhost',
-            database='barbershop_db',
-            user='root',
-            password=''
+            host='sql8.freesqldatabase.com',
+            database='sql8833797',
+            user='sql8833797',
+            password='dIZhIsGNk5',
+            port=3306
         )
-    except Error:
+    except Error as e:
+        print(f"Errore di connessione al DB: {e}")
         return None
 
 class ChatMessage(BaseModel):
